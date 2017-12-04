@@ -37,21 +37,31 @@
                 <div ng-if="captain.isCaptain">
                     <h4>You are the captain!</h4>
                     <p>Choose 3 players you wish to send to a mission.</p>
-                    <span ng-repeat="player in players track by $index">
+                    <span ng-repeat="player in players track by $index"><!-- 
                         <button ng-if="!chosen.includes(player.id)" class="btn btn-warning"  ng-click="choosePlayer(player)">{{player.playerName}}</button>
-                        <button ng-if="chosen.includes(player.id)" class="btn btn-warning" ng-class="{'disabled': chosen.includes(player.id)}" disabled>{{player.playerName}}</button>
+                        <button ng-if="chosen.includes(player.id)" class="btn btn-warning" ng-class="{'disabled': chosen.includes(player.id)}" disabled>{{player.playerName}}</button> -->
+                        <button ng-if="_.filter(currentMissionDetails.players, {id: player.id}).length == 0" class="btn btn-warning"  ng-click="choosePlayer(player)">{{player.playerName}}</button>
+                        <button ng-if="_.filter(currentMissionDetails.players, {id: player.id}).length != 0" class="btn btn-warning" disabled>{{player.playerName}}</button>
                     </span>
                 </div>
                 <div ng-if="!captain.isCaptain">
                     <h4>{{captain.captainName}} is the captain!</h4>
                     <p>The captain will now choose the players to be sent to the mission.</p>
-                    <button class="btn btn-default" ng-class="{'disabled': !chosen.includes(player.id)} " ng-repeat="player in chosen track by $index">{{_.head(_.filter(players, {id: player})).playerName}}</button>
+                    <button class="btn btn-default" ng-repeat="player in currentMissionDetails.players track by $index" disabled>{{player.playerName}}</button>
                 </div>
             </div>
             <div class="col-xs-12" ng-show="gamePart == 'vote team'">
-                <button class="btn btn-default" ng-repeat="player in chosen track by $index" disabled>{{_.head(_.filter(players, {id: player})).playerName}}</button>
-                <button class="btn btn-success" ng-click="voteTeam(true)">Accept</button>
-                <button class="btn btn-danger" ng-click="voteTeam(false)">Reject</button>
+                <button class="btn btn-default" ng-repeat="player in currentMissionDetails.players track by $index" disabled>{{player.playerName}}</button>
+                <div class="col-xs-12" ng-show="!votedTeam">
+                    <button class="btn btn-success" ng-click="voteTeam(true)">Accept</button>
+                    <button class="btn btn-danger" ng-click="voteTeam(false)">Reject</button>
+                </div>
+                <div class="col-xs-12" ng-show="votedTeam">
+                    <div class="sk-double-bounce">
+                        <div class="sk-child sk-double-bounce1"></div>
+                        <div class="sk-child sk-double-bounce2"></div>
+                    </div>
+                </div>
             </div>
 <!--             <div ng-show="gamePart == 'vote team'">
                 <div ng-if="chosen.includes(id)">

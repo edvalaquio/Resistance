@@ -117,14 +117,19 @@ io.on('connection', function(socket){
 
 	socket.on('player mission', function(data){
 		console.log("The captain has chosen ");
-		console.log(data);
 		var currentMission = _.last(rooms[socket.roomName].mission)
 		currentMission.players.push(data)
+		console.log(currentMission);
 		io.in(socket.roomName).emit('chosen player', currentMission.players);
 	});
 
-	socket.on('accept reject team', function(){
-		io.in(socket.roomName).emit('vote team');
+	socket.on('accept reject team', function(data){
+		console.log(data);
+		if(!data.rejected){
+			io.in(socket.roomName).emit('vote team');
+		} else {
+			io.in(socket.roomName).emit('proceed game')
+		}
 		// console.log("The players will begin voting");
 	});
 
@@ -132,8 +137,27 @@ io.on('connection', function(socket){
 		// console.log(rooms[socket.roomName]);
 		var currentMission = _.last(rooms[socket.roomName].mission)
 		currentMission.accept.push(data);
-		// console.log(currentMission);
-		if(currentMission.accept.length == 5){
+		console.log(currentMission.accept);
+		if(currentMission.accept.length == 5 && !currentMission.rejected){
+			var count = 0;
+			_.forEach(currentMission.accept, function(element){
+				if(element){
+					count++;
+				} else {
+					count--;
+				}
+			});
+			if(count > 0){
+				io.in(socket.roomName).emit('proceed game');
+			} else{
+				currentMission.rejected = true;
+				currentMission.players = [];
+				currentMission.accept = [];
+				io.in(socket.roomName).emit('change captain', currentMission);
+				setTimeout(function(){
+					chooseCaptain(socket.roomName, rooms[socket.roomName].players)
+				}, 2000);
+			}
 			// console.log(_.countBy(currentMission.accept, 'length'));
 		}
 	});
@@ -167,9 +191,16 @@ var gameStart = function(roomName, roomData){
 		io.to(element.id).emit('notify spy', spyArray);
 	});
 
+	chooseCaptain(roomName, roomData.players)
 
+	rooms[roomName].mission = [];
+	rooms[roomName].mission.push({number: 1, requiredPlayers: 2, status: "", players: [], accept: []});
+	io.in(roomName).emit('mission message', _.last(rooms[roomName].mission));
+	// io.in(roomName).emit('round captain', captain.playerName + " is the captain.");
+}
 
-	var captain = pickCaptain(roomData.players);
+var chooseCaptain = function(roomName, roomPlayers){
+	var captain = pickCaptain(roomPlayers);
 	console.log("The captain is: ");
 	console.log(captain);
 	var captainData = {
@@ -177,11 +208,6 @@ var gameStart = function(roomName, roomData){
 		playerName: 	captain.playerName
 	}
 	io.in(roomName).emit('chosen captain', captainData);
-
-	rooms[roomName].mission = [];
-	rooms[roomName].mission.push({number: 1, requiredPlayers: 2, status: "", players: [], accept: []});
-	io.in(roomName).emit('mission message', _.last(rooms[roomName].mission));
-	// io.in(roomName).emit('round captain', captain.playerName + " is the captain.");
 }
 
 
