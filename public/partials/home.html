@@ -1,0 +1,38 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 bg-warning">
+            <h3>Message: {{homeMessage}}</h3>
+        </div>
+        <div class="col-xs-12">
+            <label>Name</label>
+            <input type="text" ng-model="playerName"/>
+        </div>
+        <div class="user-name-form">
+            <div class="col-xs-12" ng-init="showForm">
+                <button class="btn btn-danger" ng-click="showForm=true;">Create</button>
+                <button class="btn btn-warning" ng-click="showForm=false">Join</button>
+            </div>
+            <div ng-show="showForm" class="col-xs-12">
+                <h2>Create Room</h2>
+                <div class="col-xs-12">
+                    <label class="radio-inline"><input type="radio" name="roomType" ng-model="createType" value="five">5 Players</label>
+                    <label class="radio-inline"><input type="radio" name="roomType" ng-model="createType" value="ten">10 or more Players</label>
+                </div>
+                <div class="col-xs-12">
+                    <label>Room Name</label>
+                    <input type="text" ng-model="createName"  />
+                </div>
+                <button class="btn btn-success" ng-click="createRoom()">Submit</button>
+            </div>
+            <div ng-hide="showForm" class="col-xs-12">
+                <h2>Join Room</h2>
+                <div class="col-xs-12">
+                    <label>Room Name</label>
+                    <input type="text" ng-model="joinName"  />
+                </div>
+                <button class="btn btn-success" ng-click="joinRoom()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+section{
+	/*background-color: red;*/
+	display: flex;
+	/*height: 100vh;*/
+}
+
+.resistance-side-nav{
+	/*background-color: red;*/
+}
+
+.resistance-side-brand{
+	/*background-color: blue;*/
+}
+
+.resistance-player-name{
+	width: 100%;
+	font-size: 22px;
+	padding: 5px;
+}
+
+.player-name-self{
+	background-color: green;
+}
+
+.player-name-other{
+	background-color: yellow;
+}
+
+.resistance-game-panel{
+	/*background-color: orange;*/
+}
+
+.resistance-game-room{
+	/*background-color: yellow;*/
+}
