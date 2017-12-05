@@ -130,15 +130,20 @@ angular.module("resistance.controllers.forFivePlayersController", [])
 			} else if(data.status == "Failed"){
 				growl.error("Mission failed!", {ttl: 3000, disableCountDown: true});
 			}
-			$scope.ready = false;
 			// $scope.gamePart = "next round";
 			growl.info("Prepare for next round.", {ttl: 4000, disableCountDown: true});
 			setTimeout(function(){
 				socket.emit('next round');
+				$scope.ready = false;
 			}, 3000);
 			// $scope.gamePart = "captain";
 
 		});
+
+		socket.on('game end', function(message){
+			$scope.gameMessage = message;
+			$scope.gamePart = "game end"
+		})
 
 		// $scope.nextRound = function(){
 		// 	$scope.ready = true;
