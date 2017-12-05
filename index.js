@@ -135,7 +135,7 @@ io.on('connection', function(socket){
 
 	socket.on('team vote', function(data){
 		// console.log(rooms[socket.roomName]);
-		var currentMission = _.last(rooms[socket.roomName].mission)
+		var currentMission = _.last(rooms[socket.roomName].mission);
 		currentMission.accept.push(data);
 		console.log(currentMission.accept);
 		if(currentMission.accept.length == 5 && !currentMission.rejected){
@@ -159,6 +159,19 @@ io.on('connection', function(socket){
 				}, 2000);
 			}
 			// console.log(_.countBy(currentMission.accept, 'length'));
+		}
+	});
+
+	socket.on('mission vote', function(data){
+		var currentMission = _.last(rooms[socket.roomName].mission);
+		currentMission.votes.push(data);
+		if(currentMission.votes.length == currentMission.requiredPlayers){
+			if(currentMission.votes.includes(false)){
+				currentMission.status = "Failed";
+			} else {
+				currentMission.status = "Success";
+			}
+			io.in(socket.roomName).emit("mission status", currentMission);
 		}
 	});
 
@@ -194,7 +207,7 @@ var gameStart = function(roomName, roomData){
 	chooseCaptain(roomName, roomData.players)
 
 	rooms[roomName].mission = [];
-	rooms[roomName].mission.push({number: 1, requiredPlayers: 2, status: "", players: [], accept: []});
+	rooms[roomName].mission.push({number: 1, requiredPlayers: 2, status: "", players: [], accept: [], votes: []});
 	io.in(roomName).emit('mission message', _.last(rooms[roomName].mission));
 	// io.in(roomName).emit('round captain', captain.playerName + " is the captain.");
 }

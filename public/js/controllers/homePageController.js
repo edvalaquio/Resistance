@@ -7,6 +7,9 @@ angular.module("resistance.controllers.homePageController", [])
 		// var array = [1, 2, 3];
 		// console.log(_.includes(array, 1));
 		$scope.homeMessage = "Hi! Please enter your name below.";
+		$scope.createType = "five";
+		$scope.createName = "asdf";
+		$scope.joinName = "asdf";
 		var socket;
 
 		if(socketService.socketExists()){
