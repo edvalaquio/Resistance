@@ -20,6 +20,9 @@
     <div class="col-md-9 resistance-game-panel">
         <h1 class="col-xs-12 resistance-game-room page-header">{{roomDetails.room}}</h1>
         <div class="col-xs-12 resistance-game-greeting" ng-show="!gameStart">
+            <div class="col-xs-12">
+                
+            </div>
             <h3>Hello, {{playerName}}</h3>
             <div class="sk-double-bounce">
                 <div class="sk-child sk-double-bounce1"></div>
@@ -52,11 +55,32 @@
             </div>
             <div class="col-xs-12" ng-show="gamePart == 'vote team'">
                 <button class="btn btn-default" ng-repeat="player in currentMissionDetails.players track by $index" disabled>{{player.playerName}}</button>
+                <h4>Do you approve of this player list?</h4>
                 <div class="col-xs-12" ng-show="!votedTeam">
                     <button class="btn btn-success" ng-click="voteTeam(true)">Accept</button>
                     <button class="btn btn-danger" ng-click="voteTeam(false)">Reject</button>
                 </div>
                 <div class="col-xs-12" ng-show="votedTeam">
+                    <div class="sk-double-bounce">
+                        <div class="sk-child sk-double-bounce1"></div>
+                        <div class="sk-child sk-double-bounce2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12" ng-show="gamePart == 'vote mission'">
+                <button class="btn btn-default" ng-repeat="player in currentMissionDetails.players track by $index" disabled>{{player.playerName}}</button>
+                <div class="col-xs-12" ng-if="_.map(currentMissionDetails.players, 'id').includes(id)" ng-show="!votedMission">
+                    <h4>What is your mission vote?</h4>
+                    <button class="btn btn-success" ng-click="voteMission(true)">Accept</button>
+                    <button class="btn btn-danger" ng-click="voteMission(false)">Reject</button>
+                </div>
+                <div class="col-xs-12" ng-if="_.map(currentMissionDetails.players, 'id').includes(id)" ng-show="votedMission">
+                    <h4>What is your mission vote?</h4>
+                    <button class="btn btn-success" disabled>Accept</button>
+                    <button class="btn btn-danger" disabled>Reject</button>
+                </div>
+                <div class="col-xs-12" ng-if="!_.map(currentMissionDetails.players, 'id').includes(id)">
+                    <h4>Please wait while other players vote for the mission</h4>
                     <div class="sk-double-bounce">
                         <div class="sk-child sk-double-bounce1"></div>
                         <div class="sk-child sk-double-bounce2"></div>

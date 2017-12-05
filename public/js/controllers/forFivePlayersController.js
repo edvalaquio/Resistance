@@ -111,8 +111,24 @@ angular.module("resistance.controllers.forFivePlayersController", [])
 		}
 
 		socket.on('proceed game', function(){
+			// console.log(_.map($scope.currentMissionDetails.players, 'id'));
+			// console.log(_.map($scope.currentMissionDetails.players, 'id').includes($rootScope.id))
 			growl.info("Team accepted!", {ttl: 3000, disableCountDown: true});
-		})
+			$scope.gamePart = "vote mission";
+		});
+		$scope.voteMission = function(vote){
+			$scope.votedMission = true;
+			socket.emit('mission vote', vote);
+		}
+
+		socket.on('mission status', function(data){
+			console.log(data);
+			if(data.status == "Success"){
+				growl.info("Mission success!", {ttl: 3000, disableCountDown: true});
+			} else if(data.status == "Failed"){
+				growl.error("Mission failed!", {ttl: 3000, disableCountDown: true});
+			}
+		});
 
 
 
