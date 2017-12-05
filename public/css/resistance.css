@@ -1,25 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Aldrich|Roboto');
+
+.col-md-3{
+	position: fixed;
+    top: 0;
+    bottom: 0;
+    left:0;
+    /*right:0;*/
+}
+
+.col-md-9{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+
 section{
 	/*background-color: red;*/
 	display: flex;
 	/*height: 100vh;*/
 }
 
+h1, h2, h3{
+	color: #F2EFF1;
+	font-family: 'Aldrich', sans-serif;
+}
+
+p, button{
+	color: #F2EFF1;
+	font-family: 'Roboto', sans-serif;
+}
+
 .resistance-side-nav{
-	/*background-color: red;*/
+	background-color: #1D1F21;
 }
 
 .resistance-side-brand{
-	/*background-color: blue;*/
+	text-shadow: 2px 2px 7px #DD0048;
+	font-size: 40px;
 }
 
 .resistance-player-name{
 	width: 100%;
 	font-size: 22px;
 	padding: 5px;
+	color: #F2EFF1;
+	font-family: 'Roboto', sans-serif;
 }
 
 .player-name-self{
-	background-color: green;
+	background-color: #006400;
 }
 
 .player-name-other{
@@ -27,7 +57,7 @@ section{
 }
 
 .resistance-game-panel{
-	/*background-color: orange;*/
+	background-color: #191A1C;
 }
 
 .resistance-game-room{
