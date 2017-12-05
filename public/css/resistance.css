@@ -1,33 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Aldrich|Roboto');
+
+.col-md-3{
+	position: fixed;
+    top: 0;
+    bottom: 0;
+    left:0;
+    /*right:0;*/
+}
+
+.col-md-9{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+
 section{
 	/*background-color: red;*/
 	display: flex;
 	/*height: 100vh;*/
 }
 
+h1, h2, h3{
+	color: #F2EFF1;
+	font-family: 'Aldrich', sans-serif;
+}
+
+p, button, h4{
+	color: #F2EFF1;
+	font-family: 'Roboto', sans-serif;
+}
+
+.btn{
+	box-sizing: content-box;
+	padding: 0 20px;
+	border: none;
+	border-radius: 20px;
+	text-overflow: clip;
+	box-shadow: 0 1px 0 0 rgba(40,40,40,1) , 0 2px 0 0 rgba(40,40,40,1) , 0 3px 0 0 rgba(40,40,40,1) , 0 4px 0 0 rgba(40,40,40,1) , 0 5px 0 0 rgba(40,40,40,1) , 0 6px 0 0 rgba(33,38,33,1) , 0 0 5px 0 rgba(0,0,0,0.0980392) , 0 1px 3px 0 rgba(0,0,0,0.298039) , 0 3px 5px 0 rgba(0,0,0,0.2) , 0 5px 10px 0 rgba(0,0,0,0.247059) , 0 10px 10px 0 rgba(0,0,0,0.2) , 0 20px 20px 0 rgba(0,0,0,0.14902);
+}
+
 .resistance-side-nav{
-	/*background-color: red;*/
+	background-color: #1D1F21;
 }
 
 .resistance-side-brand{
-	/*background-color: blue;*/
+/*	text-shadow: 2px 2px 7px #DD0048;
+	font-size: 40px;*/
+	color: rgba(255,255,255,1);
+  	text-decoration: normal;
+  	text-align: center;
+ 	-o-text-overflow: clip;
+  	text-overflow: clip;
+  	white-space: pre;
+  	text-shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px #ff00de , 0 0 70px #ff00de , 0 0 80px #ff00de , 0 0 100px #ff00de ;
+ 	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+ 	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+  	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 .resistance-player-name{
-	width: 100%;
-	font-size: 22px;
-	padding: 5px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
 }
 
 .player-name-self{
-	background-color: green;
+	color: #5baf31;
+	font-weight: bold;
 }
 
 .player-name-other{
-	background-color: yellow;
+	color: #B1B3D1;
 }
 
 .resistance-game-panel{
-	/*background-color: orange;*/
+	background-color: #191A1C;
 }
 
 .resistance-game-room{
