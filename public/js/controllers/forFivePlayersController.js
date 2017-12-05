@@ -5,6 +5,8 @@ angular.module("resistance.controllers.forFivePlayersController", [])
 	function($rootScope, $routeParams, $scope, $window, $location, socketService, growl){
 		var socket = socketService.getSocket();
 		$scope.gamePart = "start";
+		$scope.missions = [];
+		$scope.currentMissionDetails = "";
 		console.log($rootScope.roomDetails);
 		$scope.players = $rootScope.roomDetails.members;
 		console.log("Here in forFivePlayersController");
@@ -16,11 +18,9 @@ angular.module("resistance.controllers.forFivePlayersController", [])
 		}
 
 		socket.on('adminMessage', function(data){
-			// console.log(data);
 			growl.info(data.message, {ttl: 3000, disableCountDown: true});
 			$scope.players = data.members;
 			$scope.$apply();
-			// $scope.roomMessage = data.message;
 		});
 		
 		$scope.role = null;
@@ -38,7 +38,6 @@ angular.module("resistance.controllers.forFivePlayersController", [])
 			// console.log($rootScope.id);
 			// console.log(data);
 			$scope.gamePart = "captain";
-			console.log($scope.gamePart);
 			$scope.captain = {
 				captainName: 	data.playerName,
 				captainId: 		data.id
@@ -69,6 +68,7 @@ angular.module("resistance.controllers.forFivePlayersController", [])
 		});
 
 		socket.on('mission message', function(data){
+			$scope.ready = false;
 			var message;
 			if($scope.captain.isCaptain){
 				message = "Choose " + data.requiredPlayers + " players for Mission " + data.number;
@@ -100,35 +100,50 @@ angular.module("resistance.controllers.forFivePlayersController", [])
 
 		socket.on('vote team', function(){
 			$scope.gamePart = "vote team";
+			$scope.ready = false;
 			// $scope.currentMissionDetails.requiredPlayers = 0;
 			$scope.$apply();
 		})
 
-		$scope.votedTeam = false;
+		// $scope.votedTeam = false;
 		$scope.voteTeam = function(vote){
+			$scope.ready = true;
 			socket.emit('team vote', vote);
-			$scope.votedTeam = true;
 		}
 
 		socket.on('proceed game', function(){
 			// console.log(_.map($scope.currentMissionDetails.players, 'id'));
 			// console.log(_.map($scope.currentMissionDetails.players, 'id').includes($rootScope.id))
-			growl.info("Team accepted!", {ttl: 3000, disableCountDown: true});
 			$scope.gamePart = "vote mission";
+			$scope.ready = false;
+			growl.info("Team accepted!", {ttl: 3000, disableCountDown: true});
 		});
 		$scope.voteMission = function(vote){
-			$scope.votedMission = true;
+			$scope.ready = true;
 			socket.emit('mission vote', vote);
 		}
 
 		socket.on('mission status', function(data){
-			console.log(data);
+			$scope.currentMissionDetails = data;
 			if(data.status == "Success"){
-				growl.info("Mission success!", {ttl: 3000, disableCountDown: true});
+				growl.success("Mission success!", {ttl: 3000, disableCountDown: true});
 			} else if(data.status == "Failed"){
 				growl.error("Mission failed!", {ttl: 3000, disableCountDown: true});
 			}
+			$scope.ready = false;
+			// $scope.gamePart = "next round";
+			growl.info("Prepare for next round.", {ttl: 4000, disableCountDown: true});
+			setTimeout(function(){
+				socket.emit('next round');
+			}, 3000);
+			// $scope.gamePart = "captain";
+
 		});
+
+		// $scope.nextRound = function(){
+		// 	$scope.ready = true;
+		// 	socket.emit('next round');
+		// }
 
 
 

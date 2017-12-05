@@ -20,9 +20,6 @@
     <div class="col-md-9 resistance-game-panel">
         <h1 class="col-xs-12 resistance-game-room">{{roomDetails.room}}</h1>
         <div class="col-xs-12 resistance-game-greeting" ng-show="!gameStart">
-            <div class="col-xs-12">
-                
-            </div>
             <h3>Hello, {{playerName}}</h3>
             <div class="sk-double-bounce">
                 <div class="sk-child sk-double-bounce1"></div>
@@ -31,9 +28,16 @@
             <p>please stand by while we wait for more players</p>
         </div>
         <div class="col-xs-12 resistance-game-start" ng-show="gameStart">
+            <div class="col-xs-12">
+                <h2 ng-if="currentMissionDetails">Mission: {{currentMissionDetails.number}}, status: {{currentMissionDetails.status}}</h2>
+            </div>
+<!--             <div class="col-xs-12" ng-show="gamePart == 'next round'">
+                <h3>Ready for the next round?</h3>
+                <button class="btn btn-default" ng-click="playerNextRound()" ng-disabled="ready">Ready</button>
+            </div> -->
             <div class="col-xs-12" ng-show="gamePart == 'start'">
                 <h3>Game will now start!</h3>
-                <button class="btn btn-default" ng-click="playerReady()" ng-class="{'disabled': ready}">Ready</button>
+                <button class="btn btn-default" ng-click="playerReady()" ng-disabled="ready">Ready</button>
                 <h3 ng-if="role">Your role: {{role}}</h3>
             </div>
             <div class="col-xs-12" ng-show="gamePart == 'captain'">
@@ -56,11 +60,11 @@
             <div class="col-xs-12" ng-show="gamePart == 'vote team'">
                 <button class="btn btn-default" ng-repeat="player in currentMissionDetails.players track by $index" disabled>{{player.playerName}}</button>
                 <h4>Do you approve of this player list?</h4>
-                <div class="col-xs-12" ng-show="!votedTeam">
+                <div class="col-xs-12" ng-show="!ready">
                     <button class="btn btn-success" ng-click="voteTeam(true)">Accept</button>
                     <button class="btn btn-danger" ng-click="voteTeam(false)">Reject</button>
                 </div>
-                <div class="col-xs-12" ng-show="votedTeam">
+                <div class="col-xs-12" ng-show="ready">
                     <div class="sk-double-bounce">
                         <div class="sk-child sk-double-bounce1"></div>
                         <div class="sk-child sk-double-bounce2"></div>
@@ -71,14 +75,14 @@
                 <button class="btn btn-default" ng-repeat="player in currentMissionDetails.players track by $index" disabled>{{player.playerName}}</button>
                 <div class="col-xs-12" ng-if="_.map(currentMissionDetails.players, 'id').includes(id)" ng-show="!votedMission">
                     <h4>What is your mission vote?</h4>
-                    <button class="btn btn-success" ng-click="voteMission(true)">Accept</button>
-                    <button class="btn btn-danger" ng-click="voteMission(false)">Reject</button>
+                    <button class="btn btn-success" ng-click="voteMission(true)" ng-disabled="ready">Accept</button>
+                    <button class="btn btn-danger" ng-click="voteMission(false)" ng-disabled="ready">Reject</button>
                 </div>
-                <div class="col-xs-12" ng-if="_.map(currentMissionDetails.players, 'id').includes(id)" ng-show="votedMission">
+<!--                 <div class="col-xs-12" ng-if="_.map(currentMissionDetails.players, 'id').includes(id)" ng-show="votedMission">
                     <h4>What is your mission vote?</h4>
                     <button class="btn btn-success" disabled>Accept</button>
                     <button class="btn btn-danger" disabled>Reject</button>
-                </div>
+                </div> -->
                 <div class="col-xs-12" ng-if="!_.map(currentMissionDetails.players, 'id').includes(id)">
                     <h4>Please wait while other players vote for the mission</h4>
                     <div class="sk-double-bounce">
@@ -86,6 +90,10 @@
                         <div class="sk-child sk-double-bounce2"></div>
                     </div>
                 </div>
+            </div>
+            <div class="col-xs-12" ng-show="gamePart == 'next round'">
+                <h4>Ready for the next round?</h4>
+                <button class="btn btn-default" ng-click="nextRound()" ng-disabled="ready"></button>
             </div>
 <!--             <div ng-show="gamePart == 'vote team'">
                 <div ng-if="chosen.includes(id)">
