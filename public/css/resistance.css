@@ -1,37 +1,42 @@
-@import url('https://fonts.googleapis.com/css?family=Aldrich|Roboto');
-
-.col-md-3{
-	position: fixed;
-    top: 0;
-    bottom: 0;
-    left:0;
-    /*right:0;*/
-}
-
-.col-md-9{
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	right: 0;
-}
+@import url('https://fonts.googleapis.com/css?family=Aldrich');
 
 section{
 	/*background-color: red;*/
 	display: flex;
-	/*height: 100vh;*/
+	flex-wrap: wrap;
+	height: 100vh;
 }
 
-h1, h2, h3{
+h1{
+	color: #F2EFF1;
+	font-family: 'Aldrich', sans-serif;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+h2, h3{
 	color: #F2EFF1;
 	font-family: 'Aldrich', sans-serif;
 }
 
-p, button, h4{
+p{
 	color: #F2EFF1;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Aldrich', sans-serif;
+	font-size: 16px;
 }
 
-.btn{
+h4{
+	color: #F2EFF1;
+	font-family: 'Aldrich', sans-serif;
+}
+
+/*.text-center{
+	text-align: center;
+}*/
+
+.btn-resistance{
+	font-family: 'Aldrich', sans-serif;
+	font-size: 20px;
 	box-sizing: content-box;
 	padding: 0 20px;
 	border: none;
@@ -40,8 +45,22 @@ p, button, h4{
 	box-shadow: 0 1px 0 0 rgba(40,40,40,1) , 0 2px 0 0 rgba(40,40,40,1) , 0 3px 0 0 rgba(40,40,40,1) , 0 4px 0 0 rgba(40,40,40,1) , 0 5px 0 0 rgba(40,40,40,1) , 0 6px 0 0 rgba(33,38,33,1) , 0 0 5px 0 rgba(0,0,0,0.0980392) , 0 1px 3px 0 rgba(0,0,0,0.298039) , 0 3px 5px 0 rgba(0,0,0,0.2) , 0 5px 10px 0 rgba(0,0,0,0.247059) , 0 10px 10px 0 rgba(0,0,0,0.2) , 0 20px 20px 0 rgba(0,0,0,0.14902);
 }
 
+.btn-mission{
+	height: 5em;
+	width: 5em;
+}
+
+.img-players{
+	width: 20px;
+	height: 20px;
+}
+
 .resistance-side-nav{
 	background-color: #1D1F21;
+	/*position: fixed;*/
+   /* top: 0;
+    bottom: 0;
+    left:0;*/
 }
 
 .resistance-side-brand{
@@ -61,8 +80,8 @@ p, button, h4{
 }
 
 .resistance-player-name{
-	font-family: 'Roboto', sans-serif;
-	font-size: 20px;
+	font-family: 'Aldrich', sans-serif;
+	font-size: 19px;
 }
 
 .player-name-self{
@@ -76,8 +95,27 @@ p, button, h4{
 
 .resistance-game-panel{
 	background-color: #191A1C;
+	/*position: fixed;*/
+/*	top: 0;
+	bottom: 0;
+	right: 0;*/
 }
 
 .resistance-game-room{
 	/*background-color: yellow;*/
+}
+
+.text-center{
+	text-align: center;
+}
+
+.resistance-player-list{
+/*	display: flex;
+	flex-direction: column;
+	justify-content: center;*/
+}
+
+.resistance-player-content{
+	display: flex;
+	justify-content: center;
 }
